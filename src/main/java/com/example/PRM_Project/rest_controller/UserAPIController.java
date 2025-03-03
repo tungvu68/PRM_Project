@@ -50,6 +50,7 @@ public class UserAPIController {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
 
+
         if(!BCrypt.checkpw(password, hashed_password)){
             return new ResponseEntity<>("Password or username incorrect", HttpStatus.BAD_REQUEST);
         }
