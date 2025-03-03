@@ -18,7 +18,6 @@ public class UserAPIController {
     UserService userService;
 
 
-
     @PostMapping("/register")
     public ResponseEntity registerNewUser(@RequestParam("first_name")String first_name,
                                           @RequestParam("last_name")String last_name,
