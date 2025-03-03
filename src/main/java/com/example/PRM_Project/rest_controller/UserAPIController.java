@@ -54,6 +54,7 @@ public class UserAPIController {
             return new ResponseEntity<>("Password or username incorrect", HttpStatus.BAD_REQUEST);
         }
 
+
         Optional<User> userOptional = userService.loginUser(email, hashed_password);
         if (userOptional.isEmpty()){
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
