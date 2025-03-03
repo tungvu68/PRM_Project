@@ -9,10 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/user")
 public class UserAPIController {
     @Autowired
     UserService userService;
@@ -37,9 +39,11 @@ public class UserAPIController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity loginUser(@RequestParam("email") String email,
-                                    @RequestParam("password") String password) {
+    public ResponseEntity loginUser(@RequestBody Map<String, String> loginRequest) {
+        Map<String, Object> response = new HashMap<>();
 
+        String email = loginRequest.get("email");
+        String password = loginRequest.get("password");
         if(email.isEmpty() || password.isEmpty()){
             return new ResponseEntity<>("Email and password required", HttpStatus.BAD_REQUEST);
         }
@@ -60,13 +64,13 @@ public class UserAPIController {
         }
 
         User user = userOptional.get();
-        // Chuyển đổi User sang UserResponseDTO
-        UserResponseDTO dto = new UserResponseDTO(user.getUser_id(),
-                user.getFirst_name(),
-                user.getLast_name(),
-                user.getEmail());
 
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+
+        response.put("userId", user.getUser_id());
+        response.put("firstName",user.getFirst_name());
+        response.put("lastName", user.getLast_name());
+        response.put("email", user.getEmail());
+        return ResponseEntity.ok(response);
     }
 
 
