@@ -18,6 +18,7 @@ public class Destinations {
     private String category;
     private Date created_at;
 
+
     @ManyToOne
     @JoinColumn(name = "destination_trip_id", nullable = false)
     private DestinationTrip destinationTrip;
